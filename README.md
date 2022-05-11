@@ -1,12 +1,13 @@
-# GenericEcommerce.AcceptJS
-Accept JS Payment gateway for Generic Ecommerce module
+# XperienceCommunity.GenericEcommerce.AcceptJS
 
-To use make sure your application is already using the Generic.Ecommerce solution.  
+Accept JS Payment gateway for Generic Ecommerce module (XperienceCommunity.GenericEcomerce OR HBS.Kentico.Ecommerce)
 
-Initialize via the Startups.cs service command 
-services.RegisterAcceptJS(new AcceptJSConfiguration("7ae4gSdBP6pbLVkAXeRLSmFyuWxR9Ku23j7a8wUQv37RYsH8B7w36573W5sZb8vG", "2LE2uEtp4rq", "74bg98n65MEh4S8x"));
+To use make sure your application is already using the Generic Ecommerce solution.
 
-Create a Payment Option Provider in the Kentico Admin with a Code Name of "AcceptJS"
+1. Create a Payment Option Provider in the Kentico Admin with a Code Name of "AcceptJS"
+2. Initialize via the `Startups.cs` service command:
+``` csharp 
+services.RegisterAcceptJS(new AcceptJSConfiguration("<clientKey>", "<apiLoginID>", "<ApiTransactionKey>"));
+```
 
-You can optionally provide your own acceptjs view using the 
-PayentGatewayView property of the AcceptJSConfiguration.
+You can optionally provide your own acceptjs view using the PayentGatewayView property of the AcceptJSConfiguration.

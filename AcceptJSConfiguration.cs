@@ -1,4 +1,4 @@
-﻿namespace Generic.AcceptJSPaymentGateway
+﻿namespace XperienceCommunity.GenericEcommerce.AcceptJS
 {
     public class AcceptJSConfiguration
     {

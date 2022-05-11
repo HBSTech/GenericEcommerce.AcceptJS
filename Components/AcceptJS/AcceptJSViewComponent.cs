@@ -1,12 +1,9 @@
-﻿using Generic.AcceptJSPaymentGateway.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
+using XperienceCommunity.GenericEcommerce.AcceptJS.Models;
 
-namespace Generic.AcceptJSPaymentGateway.Components.Accept
+namespace XperienceCommunity.GenericEcommerce.AcceptJS.Components.Accept
 {
     [ViewComponent(Name = "Generic.Ecom.AcceptJS")]
 

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Generic.AcceptJSPaymentGateway.Models
+namespace XperienceCommunity.GenericEcommerce.AcceptJS.Models
 {
     public class AcceptJSViewModel
     {

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Generic.AcceptJSPaymentGateway
+namespace XperienceCommunity.GenericEcommerce.AcceptJS
 {
     public static class AcceptJSInitialization
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
 
-namespace Generic.AcceptJSPaymentGateway.Models
+namespace XperienceCommunity.GenericEcommerce.AcceptJS.Models
 {
     public class AcceptJSDataModel
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Generic.AcceptJSPaymentGateway
+namespace XperienceCommunity.GenericEcommerce.AcceptJS
 {
     public class AcceptJSOptions : IAcceptJSOptions
     {

@@ -1,12 +1,7 @@
-﻿using Generic.AcceptJSPaymentGateway.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using CMS.DataEngine;
-using CMS.SiteProvider;
-using System.Net;
 using AuthorizeNet.Api.Controllers;
 using AuthorizeNet.Api.Contracts.V1;
 using AuthorizeNet.Api.Controllers.Bases;
@@ -15,8 +10,9 @@ using System.Linq;
 using CMS.Globalization;
 using CMS.Helpers;
 using CMS.Core;
+using XperienceCommunity.GenericEcommerce.AcceptJS.Models;
 
-namespace Generic.AcceptJSPaymentGateway.Controllers
+namespace XperienceCommunity.GenericEcommerce.AcceptJS.Controllers
 {
     public class AcceptJSController : Controller
     {
