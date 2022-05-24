@@ -6,12 +6,16 @@
     <Authors>Heartland Business Systems | jhess@hbs.net</Authors>
     <Company>Heartland Business Systems</Company>
     <PackageId>XperienceCommunity.GenericEcommerce.AcceptJS</PackageId>
-    <Version>13.16.0</Version>
+    <Version>13.16.1</Version>
     <Product>XperienceCommunity.GenericEcommerce.AcceptJS</Product>
     <AssemblyName>XperienceCommunity.GenericEcommerce.AcceptJS</AssemblyName>
     <RootNamespace>XperienceCommunity.GenericEcommerce.AcceptJS</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Description>AcceptJS payment gateway for the Generic Ecommerce System for Kentico Xperience 13</Description>
+    <Description>AcceptJS payment gateway for the Generic Ecommerce System for Kentico Xperience 13
+
+Changelog
+13.16.1
+Updated the options to allow for manually setting the jsdomain.  </Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/HBSTech/GenericEcommerce.AcceptJS</PackageProjectUrl>
     <PackageIcon>hbs-favicon-96x96.png</PackageIcon>

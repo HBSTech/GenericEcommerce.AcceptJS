@@ -1,4 +1,4 @@
-﻿@model XperienceCommunity.GenericEcommerce.AcceptJS.Models.AcceptJSViewModel
+﻿@inject XperienceCommunity.GenericEcommerce.AcceptJS.IAcceptJSOptions options
 <div class="row">
     <div class="col-md-6 mb-3">
         <label for="cc-name">Name on card</label>
@@ -38,7 +38,7 @@
     if (!window.acceptJSLoaded) {
         var script = document.createElement('script');
         script.type = "text/javascript";
-        script.src = "https://@(Model.JsDomain)/v1/Accept.js";
+        script.src = "https://@(options.JsDomain())/v1/Accept.js";
         document.body.appendChild(script);
         window.acceptJSLoaded = true;
     }

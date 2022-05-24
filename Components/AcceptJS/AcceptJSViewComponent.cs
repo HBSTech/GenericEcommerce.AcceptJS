@@ -9,18 +9,16 @@ namespace XperienceCommunity.GenericEcommerce.AcceptJS.Components.Accept
 
     public class AcceptJSViewComponent : ViewComponent
     {
-        public AcceptJSViewComponent(IHostEnvironment env, IAcceptJSOptions acceptJSOptions)
+        public AcceptJSViewComponent(IAcceptJSOptions acceptJSOptions)
         {
-            Env = env;
             AcceptJSOptions = acceptJSOptions;
         }
 
-        private IHostEnvironment Env { get; }
         public IAcceptJSOptions AcceptJSOptions { get; }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            return View(AcceptJSOptions.PayentGatewayView(), new AcceptJSViewModel(Env.IsDevelopment()));
+            return View(AcceptJSOptions.PayentGatewayView());
         }
     }
 }

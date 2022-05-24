@@ -32,5 +32,10 @@ namespace XperienceCommunity.GenericEcommerce.AcceptJS
         {
             return AcceptJSConfiguration.PayentGatewayView;
         }
+
+        public string JsDomain()
+        {
+            return AcceptJSConfiguration.JsDomain;
+        }
     }
 }

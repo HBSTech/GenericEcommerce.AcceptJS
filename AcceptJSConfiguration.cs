@@ -25,5 +25,12 @@
         public string AcceptJSApiTransactionKey { get;set; }
 
         public string PayentGatewayView { get; set; } = "~/Components/AcceptJS/AcceptJS.cshtml";
+
+
+        /// <summary>
+        /// Use to set the domain of the javascript that is pulled in for the acceptjs. jstest.authorize.net is the test and js.authorize.net is the production
+        /// </summary>
+        public string JsDomain { get; set; } = "js.authorize.net";
+
     }
 }

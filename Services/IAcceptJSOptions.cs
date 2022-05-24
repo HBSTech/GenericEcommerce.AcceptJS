@@ -6,5 +6,6 @@
         string AcceptJSApiLoginID();
         string AcceptJSApiTransactionKey();
         string PayentGatewayView();
+        string JsDomain();
     }
 }
