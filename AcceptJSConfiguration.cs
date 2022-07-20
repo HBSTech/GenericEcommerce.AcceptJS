@@ -2,11 +2,16 @@
 {
     public class AcceptJSConfiguration
     {
-        public AcceptJSConfiguration(string acceptJSClientKey, string acceptJSApiLoginID, string acceptJSApiTransactionKey)
+        public AcceptJSConfiguration(string acceptJSClientKey, string acceptJSApiLoginID, string acceptJSApiTransactionKey, bool testMode = false)
         {
             AcceptJSClientKey = acceptJSClientKey;
             AcceptJSApiLoginID = acceptJSApiLoginID;
             AcceptJSApiTransactionKey = acceptJSApiTransactionKey;
+            TestMode = testMode;
+            if (testMode)
+            {
+                JsDomain = "jstest.authorize.net";
+            }
         }
 
         /// <summary>
@@ -31,6 +36,8 @@
         /// Use to set the domain of the javascript that is pulled in for the acceptjs. jstest.authorize.net is the test and js.authorize.net is the production
         /// </summary>
         public string JsDomain { get; set; } = "js.authorize.net";
+
+        public bool TestMode { get; set; } = false;
 
     }
 }

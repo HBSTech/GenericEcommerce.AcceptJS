@@ -50,7 +50,13 @@ namespace XperienceCommunity.GenericEcommerce.AcceptJS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Payment([FromBody] AcceptJSDataModel model)
         {
-            ApiOperationBase<ANetApiRequest, ANetApiResponse>.RunEnvironment = AuthorizeNet.Environment.SANDBOX;
+            if (AcceptJSOptions.TestMode())
+            {
+                ApiOperationBase<ANetApiRequest, ANetApiResponse>.RunEnvironment = AuthorizeNet.Environment.SANDBOX;
+            } else
+            {
+                ApiOperationBase<ANetApiRequest, ANetApiResponse>.RunEnvironment = AuthorizeNet.Environment.PRODUCTION;
+            }
 
             // define the merchant information (authentication / transaction id)
             ApiOperationBase<ANetApiRequest, ANetApiResponse>.MerchantAuthentication = new merchantAuthenticationType()
@@ -91,18 +97,21 @@ namespace XperienceCommunity.GenericEcommerce.AcceptJS.Controllers
                 zip = order.OrderBillingAddress.AddressZip,
                 state = state.StateCode
             };
-
-            state = await StateInfoProvider.GetAsync(order.OrderShippingAddress.AddressStateID);
-
-            var shippingAddress = new customerAddressType
+            customerAddressType shippingAddress = null;
+            if (order.OrderShippingAddress != null)
             {
-                firstName = customer.CustomerFirstName,
-                lastName = customer.CustomerLastName,
-                address = order.OrderShippingAddress.AddressLine1,
-                city = order.OrderShippingAddress.AddressCity,
-                zip = order.OrderShippingAddress.AddressZip,
-                state = state.StateCode
-            };
+                state = await StateInfoProvider.GetAsync(order.OrderShippingAddress.AddressStateID);
+
+                shippingAddress = new customerAddressType
+                {
+                    firstName = customer.CustomerFirstName,
+                    lastName = customer.CustomerLastName,
+                    address = order.OrderShippingAddress.AddressLine1,
+                    city = order.OrderShippingAddress.AddressCity,
+                    zip = order.OrderShippingAddress.AddressZip,
+                    state = state.StateCode
+                };
+            }
 
             var mainCurrency = Service.Resolve<ISiteMainCurrencySource>().GetSiteMainCurrency(order.OrderSiteID);
 
@@ -126,10 +135,14 @@ namespace XperienceCommunity.GenericEcommerce.AcceptJS.Controllers
                 tax = new extendedAmountType() { amount = tax, name = "Tax", description = "Total Order Tax" },
                 payment = paymentType,
                 billTo = billingAddress,
-                shipTo = shippingAddress,
                 lineItems = lineItems.ToArray(),
-                poNumber = order.OrderID.ToString()
+                order = new orderType() { invoiceNumber = order.OrderID.ToString() }
             };
+
+            if(shippingAddress != null)
+            {
+                transactionRequest.shipTo = shippingAddress;
+            }
 
             var request = new createTransactionRequest { transactionRequest = transactionRequest };
 

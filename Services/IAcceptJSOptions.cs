@@ -7,5 +7,6 @@
         string AcceptJSApiTransactionKey();
         string PayentGatewayView();
         string JsDomain();
+        bool TestMode();
     }
 }

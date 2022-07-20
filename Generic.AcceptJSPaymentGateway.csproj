@@ -6,7 +6,7 @@
     <Authors>Heartland Business Systems | jhess@hbs.net</Authors>
     <Company>Heartland Business Systems</Company>
     <PackageId>XperienceCommunity.GenericEcommerce.AcceptJS</PackageId>
-    <Version>13.16.1</Version>
+    <Version>13.16.4</Version>
     <Product>XperienceCommunity.GenericEcommerce.AcceptJS</Product>
     <AssemblyName>XperienceCommunity.GenericEcommerce.AcceptJS</AssemblyName>
     <RootNamespace>XperienceCommunity.GenericEcommerce.AcceptJS</RootNamespace>
@@ -15,14 +15,20 @@
 
 Changelog
 13.16.1
-Updated the options to allow for manually setting the jsdomain.  </Description>
+Updated the options to allow for manually setting the jsdomain.  
+13.16.2
+Switched to using the hosted payment form and allowed for an empty shipping address to be specified.
+13.16.3
+Removed the overlay trigger 
+13.16.4
+Updated to pass the invoice number instead of the PO Number.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/HBSTech/GenericEcommerce.AcceptJS</PackageProjectUrl>
     <PackageIcon>hbs-favicon-96x96.png</PackageIcon>
     <RepositoryUrl>https://github.com/HBSTech/GenericEcommerce.AcceptJS</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
     <PackageTags>GenericEcommerce, Generic Ecommerce, Xperience, Kentico, Authorize.net, Accept JS, AcceptJS</PackageTags>
-    <PackageReleaseNotes>Initial push.</PackageReleaseNotes>
+    <PackageReleaseNotes>Passing the invoice number over</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

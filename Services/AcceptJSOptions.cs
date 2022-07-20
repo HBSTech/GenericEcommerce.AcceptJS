@@ -37,5 +37,9 @@ namespace XperienceCommunity.GenericEcommerce.AcceptJS
         {
             return AcceptJSConfiguration.JsDomain;
         }
+        public bool TestMode()
+        {
+            return AcceptJSConfiguration.TestMode;
+        }
     }
 }
