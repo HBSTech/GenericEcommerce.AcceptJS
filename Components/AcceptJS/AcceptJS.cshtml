@@ -10,7 +10,9 @@
         data-acceptUIFormBtnTxt="Submit Payment" 
         data-acceptUIFormHeaderTxt="Card Information"
         data-paymentOptions='{"showCreditCard": true, "showBankAccount": false}' 
-        data-responseHandler="acceptJSPaymentResponse">Submit Payment
+        data-responseHandler="acceptJSPaymentResponse"
+        onclick="return pageValidated(event);"
+        >Submit Payment
     </button>
 </form>
 <div class="alert alert-danger acceptjs-alert" style="display: none" role="alert"></div>
@@ -23,24 +25,14 @@
         window.acceptJSLoaded = true;
     }
 
-    acceptJSPaymentResponse = async function(response) {
-         if (response.messages.resultCode === "Error") {
-            var i = 0;
-            var messages = [];
+    var acceptJSPaymentResponse = async function(response) {
+        if (response.messages.resultCode === "Error") {
+            var messages = response.messages.message.map(function(message) { return message.text; }).join("<br/>");
+            console.log(messages);
             var messageCont = document.querySelector(".acceptjs-alert");
             if(messageCont) {
-                messageCont.innerHTML = "";
-            }
-            while (i < response.messages.message.length) {
-                console.log(
-                    response.messages.message[i].code + ": " + response.messages.message[i].text
-                );
-                messages.push(response.messages.message[i].text);
-                i = i + 1;
-            }
-            if(messageCont) {
-                messageCont.innerHTML = messages.join("<br/>");
-                messageCont.style.display = "block";
+                messageCont.innerHTML = messages;
+                messageCont.style.display = "none";
             }
         } else {
             checkout.paymentObject = {
@@ -72,5 +64,26 @@
         });
     };
 
-
+    var pageValidated = function(ev) {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var needsValidation = document.querySelectorAll('.needs-validation')
+        // Loop over them and prevent submission
+        var totalFailed = 0;
+        
+        Array.prototype.slice.call(needsValidation)
+            .filter(el => !el.classList.contains("shipping-address") || document.body.querySelector("#differentAddress")?.checked)
+            .forEach(function (element) {
+                var inputs = element.querySelectorAll("input, select");
+                Array.prototype.slice.call(inputs).forEach((childElement) => {
+                    if (!childElement.checkValidity()) {
+                        totalFailed++;
+                    }
+                });
+                element.classList.add('was-validated')
+            });
+        if(totalFailed > 0) {
+            ev.preventDefault();
+        }
+        return totalFailed == 0;
+    }
 </script>
