@@ -32,7 +32,7 @@
             var messageCont = document.querySelector(".acceptjs-alert");
             if(messageCont) {
                 messageCont.innerHTML = messages;
-                messageCont.style.display = "none";
+                messageCont.style.display = "block";
             }
         } else {
             checkout.paymentObject = {
@@ -69,7 +69,7 @@
         var needsValidation = document.querySelectorAll('.needs-validation')
         // Loop over them and prevent submission
         var totalFailed = 0;
-        
+
         Array.prototype.slice.call(needsValidation)
             .filter(el => !el.classList.contains("shipping-address") || document.body.querySelector("#differentAddress")?.checked)
             .forEach(function (element) {
