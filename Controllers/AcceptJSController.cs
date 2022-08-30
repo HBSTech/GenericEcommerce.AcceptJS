@@ -53,7 +53,8 @@ namespace XperienceCommunity.GenericEcommerce.AcceptJS.Controllers
             if (AcceptJSOptions.TestMode())
             {
                 ApiOperationBase<ANetApiRequest, ANetApiResponse>.RunEnvironment = AuthorizeNet.Environment.SANDBOX;
-            } else
+            } 
+            else
             {
                 ApiOperationBase<ANetApiRequest, ANetApiResponse>.RunEnvironment = AuthorizeNet.Environment.PRODUCTION;
             }
@@ -98,6 +99,7 @@ namespace XperienceCommunity.GenericEcommerce.AcceptJS.Controllers
                 state = state.StateCode
             };
             customerAddressType shippingAddress = null;
+
             if (order.OrderShippingAddress != null)
             {
                 state = await StateInfoProvider.GetAsync(order.OrderShippingAddress.AddressStateID);

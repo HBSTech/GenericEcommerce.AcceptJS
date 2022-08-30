@@ -11,8 +11,8 @@
         data-acceptUIFormHeaderTxt="Card Information"
         data-paymentOptions='{"showCreditCard": true, "showBankAccount": false}' 
         data-responseHandler="acceptJSPaymentResponse"
-        onclick="return pageValidated(event);"
-        >Submit Payment
+        onclick="return pageValidated(event);">
+            Submit Payment
     </button>
 </form>
 <div class="alert alert-danger acceptjs-alert" style="display: none" role="alert"></div>
@@ -25,10 +25,10 @@
         window.acceptJSLoaded = true;
     }
 
-    var acceptJSPaymentResponse = async function(response) {
+    window.acceptJSPaymentResponse = async function(response) {
         if (response.messages.resultCode === "Error") {
             var messages = response.messages.message.map(function(message) { return message.text; }).join("<br/>");
-            console.log(messages);
+            console.log(response);
             var messageCont = document.querySelector(".acceptjs-alert");
             if(messageCont) {
                 messageCont.innerHTML = messages;
@@ -64,7 +64,7 @@
         });
     };
 
-    var pageValidated = function(ev) {
+    window.pageValidated = function(ev) {
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
         var needsValidation = document.querySelectorAll('.needs-validation')
         // Loop over them and prevent submission
@@ -83,6 +83,12 @@
             });
         if(totalFailed > 0) {
             ev.preventDefault();
+            setTimeout(function() { 
+                var queries = document.querySelectorAll("#AcceptUIBackground, #AcceptUIContainer");
+                queries.forEach(function(item){
+                    item.classList.remove("show");
+                }); 
+            }, 100);
         }
         return totalFailed == 0;
     }
