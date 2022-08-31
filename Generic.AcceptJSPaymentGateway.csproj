@@ -6,7 +6,7 @@
     <Authors>Heartland Business Systems | jhess@hbs.net</Authors>
     <Company>Heartland Business Systems</Company>
     <PackageId>XperienceCommunity.GenericEcommerce.AcceptJS</PackageId>
-    <Version>13.16.6</Version>
+    <Version>13.16.7</Version>
     <Product>XperienceCommunity.GenericEcommerce.AcceptJS</Product>
     <AssemblyName>XperienceCommunity.GenericEcommerce.AcceptJS</AssemblyName>
     <RootNamespace>XperienceCommunity.GenericEcommerce.AcceptJS</RootNamespace>
@@ -25,14 +25,16 @@ Updated to pass the invoice number instead of the PO Number.
 13.16.5
 Updated to display error messages
 13.16.6
-Updated the messaging script.</Description>
+Updated the messaging script.
+13.16.7
+Added the payment result alert to the status.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/HBSTech/GenericEcommerce.AcceptJS</PackageProjectUrl>
     <PackageIcon>hbs-favicon-96x96.png</PackageIcon>
     <RepositoryUrl>https://github.com/HBSTech/GenericEcommerce.AcceptJS</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
     <PackageTags>GenericEcommerce, Generic Ecommerce, Xperience, Kentico, Authorize.net, Accept JS, AcceptJS</PackageTags>
-    <PackageReleaseNotes>Updated the messaging script.</PackageReleaseNotes>
+    <PackageReleaseNotes>Added the payment result alert to the status.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

@@ -22,10 +22,11 @@ namespace XperienceCommunity.GenericEcommerce.AcceptJS.Controllers
         public IStateInfoProvider StateInfoProvider { get; }
         public IAcceptJSOptions AcceptJSOptions { get; }
         public ICurrencyInfoProvider CurrencyInfoProvider { get; }
+        public ICountryInfoProvider CountryInfoProvider { get; }
 
         public IExchangeRateInfoProvider ExchangeRateInfoProvider;
 
-        public AcceptJSController(IOrderInfoProvider orderInfoProvider, IOrderItemInfoProvider orderItemInfoProvider, ICustomerInfoProvider customerInfoProvider, IStateInfoProvider stateInfoProvider, IAcceptJSOptions acceptJSOptions, IExchangeRateInfoProvider exchangeRateInfoProvider, ICurrencyInfoProvider currencyInfoProvider)
+        public AcceptJSController(IOrderInfoProvider orderInfoProvider, IOrderItemInfoProvider orderItemInfoProvider, ICustomerInfoProvider customerInfoProvider, IStateInfoProvider stateInfoProvider, IAcceptJSOptions acceptJSOptions, IExchangeRateInfoProvider exchangeRateInfoProvider, ICurrencyInfoProvider currencyInfoProvider, ICountryInfoProvider countryInfoProvider)
         {
             OrderInfoProvider = orderInfoProvider;
             OrderItemInfoProvider = orderItemInfoProvider;
@@ -34,6 +35,7 @@ namespace XperienceCommunity.GenericEcommerce.AcceptJS.Controllers
             AcceptJSOptions = acceptJSOptions;
             ExchangeRateInfoProvider = exchangeRateInfoProvider;
             CurrencyInfoProvider = currencyInfoProvider;
+            CountryInfoProvider = countryInfoProvider;
         }
 
         public async Task<IActionResult> GetAuthorization()
@@ -88,6 +90,7 @@ namespace XperienceCommunity.GenericEcommerce.AcceptJS.Controllers
             }
 
             var state = await StateInfoProvider.GetAsync(order.OrderBillingAddress.AddressStateID);
+            var country = await CountryInfoProvider.GetAsync(order.OrderBillingAddress.AddressCountryID);
 
             var billingAddress = new customerAddressType
             {
@@ -96,13 +99,15 @@ namespace XperienceCommunity.GenericEcommerce.AcceptJS.Controllers
                 address = order.OrderBillingAddress.AddressLine1,
                 city = order.OrderBillingAddress.AddressCity,
                 zip = order.OrderBillingAddress.AddressZip,
-                state = state.StateCode
+                state = state.StateCode,
+                country = country.CountryThreeLetterCode
             };
             customerAddressType shippingAddress = null;
 
             if (order.OrderShippingAddress != null)
             {
                 state = await StateInfoProvider.GetAsync(order.OrderShippingAddress.AddressStateID);
+                country = await CountryInfoProvider.GetAsync(order.OrderShippingAddress.AddressCountryID);
 
                 shippingAddress = new customerAddressType
                 {
@@ -111,7 +116,8 @@ namespace XperienceCommunity.GenericEcommerce.AcceptJS.Controllers
                     address = order.OrderShippingAddress.AddressLine1,
                     city = order.OrderShippingAddress.AddressCity,
                     zip = order.OrderShippingAddress.AddressZip,
-                    state = state.StateCode
+                    state = state.StateCode,
+                    country = country.CountryThreeLetterCode
                 };
             }
 
@@ -138,7 +144,8 @@ namespace XperienceCommunity.GenericEcommerce.AcceptJS.Controllers
                 payment = paymentType,
                 billTo = billingAddress,
                 lineItems = lineItems.ToArray(),
-                order = new orderType() { invoiceNumber = order.OrderID.ToString() }
+                order = new orderType() { invoiceNumber = order.OrderID.ToString() },
+                customer = new customerDataType() { email = customer.CustomerEmail }
             };
 
             if(shippingAddress != null)
@@ -155,8 +162,10 @@ namespace XperienceCommunity.GenericEcommerce.AcceptJS.Controllers
             // get the response from the service (errors contained if any)
             var response = controller.GetApiResponse();
 
+            var constrollerResponse = new JsonResult(new { Message = new { Message = ResHelper.GetString("AcceptJS.ResponseNull"), Type = 1 } });
+
             // validate response
-            if (response != null)
+            if (response != null && response.messages.resultCode != messageTypeEnum.Ok)
             {
                 if (response.messages.resultCode == messageTypeEnum.Ok)
                 {
@@ -182,34 +191,34 @@ namespace XperienceCommunity.GenericEcommerce.AcceptJS.Controllers
                         }
                         else
                         {
-                            return new JsonResult(new { Message = $"Message Code: { response.transactionResponse.messages[0].code},  Description: {response.transactionResponse.messages[0].description}" });
+                            constrollerResponse = new JsonResult(new { Message = new { Message = $"Message Code: { response.transactionResponse.messages[0].code},  Description: {response.transactionResponse.messages[0].description}", Type = 1 } });
                         }
                     }
                     else
                     {
                         if (response.transactionResponse.errors != null)
                         {
-                            return new JsonResult(new { Message = $"Failed Transaction. {response.transactionResponse.errors[0].errorCode}: {response.transactionResponse.errors[0].errorText}" });
+                            constrollerResponse = new JsonResult(new { Message = new { Message = $"Failed Transaction. {response.transactionResponse.errors[0].errorCode}: {response.transactionResponse.errors[0].errorText}", Type = 1 } });
                         }
-                        return new JsonResult(new { Message = "Failed Transaction." });
+                        else
+                        {
+                            constrollerResponse = new JsonResult(new { Message = new { Message = "Failed Transaction.", Type = 1 } });
+                        }
                     }
                 }
                 else
                 {
                     if (response.transactionResponse != null && response.transactionResponse.errors != null)
                     {
-                        return new JsonResult(new { Message = $"Failed Transaction. {response.transactionResponse.errors[0].errorCode}: {response.transactionResponse.errors[0].errorText}" });
+                        constrollerResponse = new JsonResult(new { Message = new { Message = $"Failed Transaction. {response.transactionResponse.errors[0].errorCode}: {response.transactionResponse.errors[0].errorText}", Type = 1 } });
                     }
                     else
                     {
-                        return new JsonResult(new { Message = $"Failed Transaction. {response.messages.message[0].code}: {response.messages.message[0].text}" });
+                        constrollerResponse = new JsonResult(new { Message = new { Message = $"Failed Transaction. {response.messages.message[0].code}: {response.messages.message[0].text}", Type = 1 } });
                     }
                 }
             }
-            else
-            {
-                return new JsonResult(new { Message = ResHelper.GetString("AcceptJS.ResponseNull") });
-            }
+            return constrollerResponse;
         }
     }
 }

@@ -64,6 +64,21 @@
         });
     };
 
+    if(!window.acceptjsAlert) {
+        window.acceptjsAlert = document.body.addEventListener("payment-result", function (ev) {
+            if (!ev.detail.paymentSuccessful && ev.detail.message && ev.detail.message.type == 1) {
+                var alert = ev.detail.message;
+                //checkout.orderGUID = null;
+                var messageCont = document.querySelector(".acceptjs-alert");
+                if(messageCont) {
+                    messageCont.innerHTML = alert.message;
+                    messageCont.style.display = "block";
+                }
+                window.scrollTo(0, document.body.scrollHeight);
+            }
+        });
+    }
+
     window.pageValidated = function(ev) {
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
         var needsValidation = document.querySelectorAll('.needs-validation')
