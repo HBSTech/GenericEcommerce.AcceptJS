@@ -165,7 +165,7 @@ namespace XperienceCommunity.GenericEcommerce.AcceptJS.Controllers
             var constrollerResponse = new JsonResult(new { Message = new { Message = ResHelper.GetString("AcceptJS.ResponseNull"), Type = 1 } });
 
             // validate response
-            if (response != null && response.messages.resultCode != messageTypeEnum.Ok)
+            if (response != null)
             {
                 if (response.messages.resultCode == messageTypeEnum.Ok)
                 {
