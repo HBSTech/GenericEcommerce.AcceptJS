@@ -6,7 +6,7 @@
     <Authors>Heartland Business Systems | jhess@hbs.net</Authors>
     <Company>Heartland Business Systems</Company>
     <PackageId>XperienceCommunity.GenericEcommerce.AcceptJS</PackageId>
-    <Version>13.16.8</Version>
+    <Version>13.16.9</Version>
     <Product>XperienceCommunity.GenericEcommerce.AcceptJS</Product>
     <AssemblyName>XperienceCommunity.GenericEcommerce.AcceptJS</AssemblyName>
     <RootNamespace>XperienceCommunity.GenericEcommerce.AcceptJS</RootNamespace>
@@ -29,14 +29,16 @@ Updated the messaging script.
 13.16.7
 Added the payment result alert to the status.
 13.16.8
-Removed a testing clause.</Description>
+Removed a testing clause.
+13.16.9
+Added event logging for error response</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/HBSTech/GenericEcommerce.AcceptJS</PackageProjectUrl>
     <PackageIcon>hbs-favicon-96x96.png</PackageIcon>
     <RepositoryUrl>https://github.com/HBSTech/GenericEcommerce.AcceptJS</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
     <PackageTags>GenericEcommerce, Generic Ecommerce, Xperience, Kentico, Authorize.net, Accept JS, AcceptJS</PackageTags>
-    <PackageReleaseNotes>Removed a testing clause.</PackageReleaseNotes>
+    <PackageReleaseNotes>Added event logging</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

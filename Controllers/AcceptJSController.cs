@@ -11,6 +11,7 @@ using CMS.Globalization;
 using CMS.Helpers;
 using CMS.Core;
 using XperienceCommunity.GenericEcommerce.AcceptJS.Models;
+using System.Text.Json;
 
 namespace XperienceCommunity.GenericEcommerce.AcceptJS.Controllers
 {
@@ -25,8 +26,9 @@ namespace XperienceCommunity.GenericEcommerce.AcceptJS.Controllers
         public ICountryInfoProvider CountryInfoProvider { get; }
 
         public IExchangeRateInfoProvider ExchangeRateInfoProvider;
+        private readonly IEventLogService EventLogService;
 
-        public AcceptJSController(IOrderInfoProvider orderInfoProvider, IOrderItemInfoProvider orderItemInfoProvider, ICustomerInfoProvider customerInfoProvider, IStateInfoProvider stateInfoProvider, IAcceptJSOptions acceptJSOptions, IExchangeRateInfoProvider exchangeRateInfoProvider, ICurrencyInfoProvider currencyInfoProvider, ICountryInfoProvider countryInfoProvider)
+        public AcceptJSController(IOrderInfoProvider orderInfoProvider, IOrderItemInfoProvider orderItemInfoProvider, ICustomerInfoProvider customerInfoProvider, IStateInfoProvider stateInfoProvider, IAcceptJSOptions acceptJSOptions, IExchangeRateInfoProvider exchangeRateInfoProvider, ICurrencyInfoProvider currencyInfoProvider, ICountryInfoProvider countryInfoProvider, IEventLogService eventLogService)
         {
             OrderInfoProvider = orderInfoProvider;
             OrderItemInfoProvider = orderItemInfoProvider;
@@ -36,6 +38,7 @@ namespace XperienceCommunity.GenericEcommerce.AcceptJS.Controllers
             ExchangeRateInfoProvider = exchangeRateInfoProvider;
             CurrencyInfoProvider = currencyInfoProvider;
             CountryInfoProvider = countryInfoProvider;
+            EventLogService = eventLogService;
         }
 
         public async Task<IActionResult> GetAuthorization()
@@ -217,6 +220,9 @@ namespace XperienceCommunity.GenericEcommerce.AcceptJS.Controllers
                         constrollerResponse = new JsonResult(new { Message = new { Message = $"Failed Transaction. {response.messages.message[0].code}: {response.messages.message[0].text}", Type = 1 } });
                     }
                 }
+            } else
+            {
+                EventLogService.LogError("AcceptJS", "ResponseNull", eventDescription: JsonSerializer.Serialize(controller.GetErrorResponse()));
             }
             return constrollerResponse;
         }
