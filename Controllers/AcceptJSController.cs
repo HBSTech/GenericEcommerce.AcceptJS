@@ -89,7 +89,9 @@ namespace XperienceCommunity.GenericEcommerce.AcceptJS.Controllers
 
             foreach(var item in orderItems)
             {
-                lineItems.Add(new lineItemType() { itemId = item.OrderItemID.ToString(), name = item.OrderItemSKUName, unitPrice = item.OrderItemUnitPrice, quantity = item.OrderItemUnitCount });
+                var name = ValidationHelper.GetCodeName(item.OrderItemSKUName, replacement:"-", maxLength: 31);
+
+                lineItems.Add(new lineItemType() { itemId = item.OrderItemID.ToString(), name = name, unitPrice = item.OrderItemUnitPrice, quantity = item.OrderItemUnitCount });
             }
 
             var state = await StateInfoProvider.GetAsync(order.OrderBillingAddress.AddressStateID);
