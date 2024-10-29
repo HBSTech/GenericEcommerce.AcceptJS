@@ -20,7 +20,7 @@
     if (!window.acceptJSLoaded) {
         var script = document.createElement('script');
         script.type = "text/javascript";
-        script.src = "https://@(options.JsDomain())/v3/AcceptUI.js";
+        script.src = "https://@(options.JsDomain())/v3/AcceptUI.js?" + Date.now().toString(36);
         document.body.appendChild(script);
         window.acceptJSLoaded = true;
     }
